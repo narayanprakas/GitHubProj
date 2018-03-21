@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Function And Validation Project</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<head>
+<body>
+	<div class="container">
+	<h1 class="text-center">Register the form</h1>
+		<div class="alert" id="msg"></div>
+ 		<form id="formreg">
+  			<div class="form-group row">
+  			
+   				 	<label class="col-sm-2">First Name</label>
+   				 		
+   				 		<input class="col-sm-10" type="text" id="fname" name="fname">
+   				 
+   			</div>
+   				
+   				 <div class="form-group row">
+   				 	<label class="col-sm-2">Last Name</label>
+   				 	
+   				 		<input  class="col-sm-10" type="text" id="lname" name="lname">
+   				 		
+   				 </div>		
+   				 
+   				 <div class="form-group row">
+   				 	<label class="col-sm-2">E-mail</label>
+   				 		
+   				 		<input class="col-sm-10" type="text" id="email" name="email">
+   				 		
+   				 </div>
+   				 
+   				 <div class="form-group row">
+   				 	<label class="col-sm-2">Password</label>
+   				 		
+   				 		<input class="col-sm-10" type="password" id="password1" name="password1">
+   				 	
+   				</div>
+   				 
+   				 <div class="form-group row">
+   				 	<label class="col-sm-2">Confirm Password</label>
+   				 		<input class="col-sm-10" type="password" id="password2" name="password2">
+   				 		
+   				 </div>
+   				
+ 			 <button type="submit" class="btn btn-primary" value="submit">Submit</button>
+ 	
+</form>
+</div>
+	
+		<script>
+		function register(e)
+		{
+		e.preventDefault();
+		var fname = document.getElementById('fname').value;
+		var lname = document.getElementById('lname').value;
+		var email = document.getElementById('email').value;
+		var password1 = document.getElementById('password1').value;
+		var password2 = document.getElementById('password2').value;
+		var msg = document.getElementById('msg');
+		
+		if(fname == '' || email == ''||password1 == '' || password2== '')
+				{
+					msg.className="alert alert-danger";
+					msg.innerHTML= 'please enter the details..';
+				}
+			else
+				{
+					if(fname.length < 3||lname.length < 3)	
+						{		 
+							msg.className="alert alert-danger";
+							msg.innerHTML= 'Please enter valid name';
+						}
+						else
+							{
+							var dotpos = email.lastIndexOf(".");
+							var atpos = email.indexOf("@");
+								if(atpos < 1 || dotpos+2 >= email.length)
+									{
+										msg.className="alert alert-danger";
+										msg.innerHTML= 'Please enter valid email name';
+									}
+									else
+										{
+											
+											if(password1.length!=password2.length || password1!=password2||password1.length<=6)
+												{
+													msg.className="alert alert-danger";
+													msg.innerHTML= 'Please enter valid password in password(min length:7)';
+												}		
+												else
+													{
+														msg.className="alert alert-success";
+														msg.innerHTML= email+' email name registered';
+													}
+										}		
+							}
+	  			}
+	  }
+		
+		document.getElementById('formreg').addEventListener('submit', register, false);
+
+		</script>
+		
+</body>
+</html>
