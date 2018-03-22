@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+			<title>Github Profile Finder</title>
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+			<style>
+			img
+				{
+					width:100%;
+				}
+				</style>
+		</head>
+		<body>
+		<div class="container">
+			<div id="formdiv">
+			<form id="userForm">
+				<div class="form-group">
+					<label>Enter the Username</label>
+						<input type="text" class="form-control" id="userName">
+				</div>
+			</form>	
+			</div>
+				
+			<div id="profile"></div>
+			
+		</div>
+			
+			<script>
+			function getProfile(e){
+				e.preventDefault();
+				var username= document.getElementById('userName').value;
+				if(!username || username == '')
+				{
+					username='narayanprakas';
+				}
+				
+				var xhttp = new XMLHttpRequest();
+				
+				xhttp.onreadystatechange = function(){
+					if(xhttp.readystate == 4||xhttp.status == 200)
+						{
+						var user =JSON.parse(xhttp.responseText);
+						document.getElementById('profile').innerHTML = `<div class="card">
+  																			<div class="card-header">
+   																				 GitHub Profile
+  																			</div>
+ 																			 <div class="card-body">
+   																					 <h5 class="card-title">${user.name}</h5>
+   																						 <div class="row">
+   																						 	<div class= "col-md-3">
+   																						 	<img src="${user.avatar_url}">
+   																						 	</div>
+   																						 	<div class = "col-md-9">
+   																						 		<button type="button" class="btn btn-primary">
+ 																										 Repository: <span class="badge badge-light"> ${user.public_repos}</span>
+  																											<span class="sr-only">unread messages</span>
+																											</button>
+																								<button type="button" class="btn btn-primary">
+ 																										 Followers: <span class="badge badge-light"> ${user.followers} </span>
+  																											<span class="sr-only">unread messages</span>
+																											</button>
+																								<button type="button" class="btn btn-primary">
+ 																										 Following:  <span class="badge badge-light">${user.following}</span>
+  																											<span class="sr-only">unread messages</span>
+																											</button>			
+   																						 		<ul class="list-group">
+ 																									 <li class="list-group-item disabled">Profile Id: ${user.id}</li>
+ 																									 <li class="list-group-item">Login: ${user.login}</li>
+ 																									  <li class="list-group-item">Profile_URL: ${user.html_url}</li>
+ 																									  <li class="list-group-item">Created at: ${user.created_at}</li>
+ 																									  <li class="list-group-item">Updated at: ${user.updated_at}</li>
+  		
+																								</ul>
+																								<a href="${user.html_url}">click here..</a>
+																								
+   																						 	</div>
+  																							</div>
+																			</div>`;
+						}
+					}
+					xhttp.open('GET', 'https://api.github.com/users/'+username , true);
+					xhttp.send();
+				}
+				document.getElementById('userForm').addEventListener('submit', getProfile, false);
+				getProfile();
+			</script>
+		</body>
+	</html>
